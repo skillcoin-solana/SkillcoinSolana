@@ -57,7 +57,10 @@ const Explore = () => {
 	return (
 		<div className="explore-container">
 			<div className="explore-inner_container">
-				<h2 className="h3-bold md:h2-bold w-full">Browse Offers</h2>
+				<div className="flex items-center gap-2 w-full max-w-5xl">
+					<AiOutlineSearch size={32} />
+					<h2 className="h3-bold md:h2-bold w-full">Browse Offers</h2>
+				</div>
 				<div className="flex gap-1 px-4 w-full rounded-lg bg-gray-2">
 					<Input
 						type="text"

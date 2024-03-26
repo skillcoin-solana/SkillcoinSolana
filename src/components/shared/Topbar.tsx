@@ -15,6 +15,7 @@ import { useGetPosts, useSearchPosts } from '@/lib/react-query/queries';
 import { IoExitOutline } from 'react-icons/io5';
 import { GoListUnordered } from 'react-icons/go';
 import { MdOutlineBookmarkBorder } from 'react-icons/md';
+import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 
 export type SearchResultProps = {
 	isSearchFetching: boolean;
@@ -91,8 +92,8 @@ const Topbar = () => {
 						height={325}
 					/>
 				</Link>
-
-				<div>
+				<WalletMultiButton className="!h-12 !bg-gray-2 !hover:bg-denim-blue !px-5 !text-light-1 !flex !gap-2" />
+				{/* <div>
 					<div className="sm:flex hidden h-10 gap-1 px-4 xl:w-[800px] w-420 rounded-xl bg-gray-2 items-center">
 						<Input
 							type="text"
@@ -106,7 +107,7 @@ const Topbar = () => {
 						/>
 						<AiOutlineSearch size={24} className="cursor-pointer" />
 					</div>
-				</div>
+				</div> */}
 				<div className="flex gap-4 items-center">
 					<div className="lg:flex hidden gap-8 items-center">
 						<Link to="/explore">

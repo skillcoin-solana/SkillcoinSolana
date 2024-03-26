@@ -1,8 +1,9 @@
 import { Models } from 'appwrite';
 
-import { GridPostList, Loader } from '@/components/shared';
+import { GridPostList, Loader, SolanaButton } from '@/components/shared';
 import { useGetCurrentUser } from '@/lib/react-query/queries';
 import { MdOutlineBookmarkBorder } from 'react-icons/md';
+import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 
 const Saved = () => {
 	const { data: currentUser } = useGetCurrentUser();
@@ -32,7 +33,9 @@ const Saved = () => {
 							Currently you are not following any offers
 						</p>
 					) : (
-						<GridPostList posts={savePosts} showStats={false} />
+						<>
+							<GridPostList posts={savePosts} showStats={false} />
+						</>
 					)}
 				</ul>
 			)}

@@ -8,11 +8,11 @@ import {
 } from 'react-router-dom';
 
 import { Button } from '@/components/ui';
-import { LikedPosts } from '@/_root/pages';
+import { LikedPosts, WalletStats } from '@/_root/pages';
 import { useUserContext } from '@/context/AuthContext';
 import { useGetUserById } from '@/lib/react-query/queries';
 import { GridPostList, Loader } from '@/components/shared';
-import { MdEdit, MdOutlineLocalOffer } from 'react-icons/md';
+import { MdEdit, MdOutlineLocalOffer, MdWallet } from 'react-icons/md';
 import { FaRegHeart } from 'react-icons/fa';
 
 interface StabBlockProps {
@@ -99,6 +99,15 @@ const Profile = () => {
 			{currentUser.$id === user.id && (
 				<div className="flex max-w-5xl w-full">
 					<Link
+						to={`/profile/${id}/wallet`}
+						className={`profile-tab rounded-r-lg ${
+							pathname === `/profile/${id}/wallet` && '!bg-dark-2'
+						}`}
+					>
+						<MdWallet size={24} color={'#0073cf'} />
+						Your Wallet
+					</Link>
+					<Link
 						to={`/profile/${id}`}
 						className={`profile-tab rounded-l-lg ${
 							pathname === `/profile/${id}` && '!bg-dark-2'
@@ -125,7 +134,10 @@ const Profile = () => {
 					element={<GridPostList posts={currentUser.posts} showUser={false} />}
 				/>
 				{currentUser.$id === user.id && (
-					<Route path="/liked-posts" element={<LikedPosts />} />
+					<>
+						<Route path="/liked-posts" element={<LikedPosts />} />
+						<Route path="/wallet" element={<WalletStats />} />
+					</>
 				)}
 			</Routes>
 			<Outlet />

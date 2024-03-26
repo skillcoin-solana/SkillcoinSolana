@@ -274,7 +274,7 @@
 	}
 
 	.shad-button_dark_4 {
-		@apply h-12 bg-gray-2 px-5 text-light-1 flex gap-2 !important;
+		@apply h-12 bg-gray-2 hover:bg-denim-blue px-5 text-light-1 flex gap-2 !important;
 	}
 
 	.shad-button_ghost {
