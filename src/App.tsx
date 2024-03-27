@@ -75,7 +75,7 @@ const App = () => {
 								<Route path="/profile/:id/*" element={<Profile />} />
 								<Route path="/update-profile/:id" element={<UpdateProfile />} />
 								<Route path="/roadmap" element={<Roadmap />} />
-								<Route path="/make-transaction" element={<SendSol />} />
+								<Route path="/make-transaction/:id" element={<SendSol />} />
 							</Route>
 						</Routes>
 

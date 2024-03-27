@@ -122,12 +122,19 @@ const PostDetails = () => {
 								<p className="text-neon-blue subtle-semibold lg:h1-semibold self-end">
 									$ {post?.location}
 								</p>
-								<Button
-									type="button"
-									className="shad-button_primary px-8 w-40 mt-6 self-end"
-								>
-									Hire
-								</Button>
+								{user.id != post?.creator.$id && (
+									<Link
+										to={`/make-transaction/${post?.$id}`}
+										className="self-end"
+									>
+										<Button
+											type="button"
+											className="shad-button_primary px-8 w-40 mt-6"
+										>
+											Hire
+										</Button>
+									</Link>
+								)}
 							</div>
 						</div>
 
