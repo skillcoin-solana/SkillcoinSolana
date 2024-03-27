@@ -29,9 +29,18 @@ const WalletStats = () => {
 		);
 
 	return (
-		<div className="bg-gray-2 rounded-lg p-2 xl:w-1/3 w-full self-start xl:ml-52">
+		<div className="bg-gray-2 rounded-lg p-2 xl:w-1/2 w-full self-start xl:ml-52">
 			<ul className="p-2">
 				<li className="flex justify-between">
+					<p className="tracking-wider base-semibold">Public Key</p>
+					<p className="lg:flex hidden text-neon-blue base-semibold">
+						{currentUser.walletPubKey! || 'Not Available'}
+					</p>
+					<p className="lg:hidden flex text-neon-blue base-semibold">
+						{`${currentUser.walletPubKey!.slice(0, 20)}...` || 'Not Available'}
+					</p>
+				</li>
+				<li className="flex mt-4 justify-between">
 					<p className="tracking-wider base-semibold">Wallet</p>
 					<p className="text-neon-blue base-semibold">
 						{publicKey ? 'Connected' : 'Not Connected'}

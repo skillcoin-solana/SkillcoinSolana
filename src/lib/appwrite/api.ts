@@ -216,7 +216,7 @@ export async function searchPosts(searchTerm: string) {
 		if (!posts) throw Error;
 
 		const filteredPosts = posts.documents.filter((post) =>
-			post.tags.some((tag) =>
+			post.tags.some((tag: any) =>
 				tag.toLowerCase().includes(searchTerm.toLowerCase())
 			)
 		);
@@ -524,6 +524,7 @@ export async function updateUser(user: IUpdateUser) {
 				bio: user.bio,
 				imageUrl: image.imageUrl,
 				imageId: image.imageId,
+				walletPubKey: user.walletPubKey,
 			}
 		);
 

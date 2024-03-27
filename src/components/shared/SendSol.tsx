@@ -7,9 +7,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useUserContext } from '@/context/AuthContext';
 import { useGetPostById } from '@/lib/react-query/queries';
 import { Loader } from '.';
+import { getPostById } from '@/lib/appwrite/api';
 
 const SendSol = () => {
 	const navigate = useNavigate();
+
 	const { id } = useParams();
 
 	const { data: post, isLoading } = useGetPostById(id);
@@ -64,6 +66,17 @@ const SendSol = () => {
 		getInfo();
 	}, [connection, publicKey]);
 
+	const calulateSol = (usPrice: number) => {
+		return usPrice * 0.0053;
+	};
+
+	useEffect(() => {
+		getPostById(id).then((res: any) => {
+			setAccount(res.creator.walletPubKey);
+			setAmount(calulateSol(parseFloat(res.location)));
+		});
+	}, [id]);
+
 	const outputs = [
 		{
 			title: 'Account Balance',
@@ -84,7 +97,7 @@ const SendSol = () => {
 					Make a Transaction
 				</h2>
 			</div>
-			<p className="self-start ml-52">
+			<p className="self-start ml-52 mt-4">
 				You are paying for offer: "{post?.caption}" by{' '}
 				<span className="text-denim-blue">@{post?.creator.username}.</span>
 			</p>
@@ -97,21 +110,22 @@ const SendSol = () => {
 							<input
 								type="text"
 								id="account"
-								onChange={(event) => setAccount(event.target.value)}
+								value={account}
+								readOnly
 								placeholder="Receiver's public key"
-								className="h-10 p-2 bg-gray-2 border-none placeholder:text-gray-5 focus-visible:ring-1 focus-visible:ring-offset-1 ring-offset-denim-blue"
+								className="h-10 p-2 bg-gray-2 rounded-lg border-none placeholder:text-gray-5 focus-visible:ring-1 focus-visible:ring-offset-1 ring-offset-denim-blue"
 							/>
 						</div>
 						<div className="flex flex-col">
 							<label className="shad-form_label">Amount</label>
-
 							<input
 								id="amount"
-								type="number"
+								type="string"
 								min={0}
-								onChange={(event) => setAmount(Number(event.target.value))}
+								value={amount}
+								readOnly
 								placeholder="Amount to send"
-								className="h-10 p-2 bg-gray-2 border-none placeholder:text-gray-5 focus-visible:ring-1 focus-visible:ring-offset-1 ring-offset-denim-blue"
+								className="h-10 p-2 bg-gray-2 rounded-lg border-none placeholder:text-gray-5 focus-visible:ring-1 focus-visible:ring-offset-1 ring-offset-denim-blue"
 							/>
 						</div>
 						<Button

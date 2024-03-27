@@ -34,6 +34,7 @@ const UpdateProfile = () => {
 			username: user.username,
 			email: user.email,
 			bio: user.bio || '',
+			walletPubKey: user.walletPubKey || '',
 		},
 	});
 
@@ -58,6 +59,7 @@ const UpdateProfile = () => {
 			file: value.file,
 			imageUrl: currentUser.imageUrl,
 			imageId: currentUser.imageId,
+			walletPubKey: value.walletPubKey,
 		});
 
 		if (!updatedUser) {
@@ -71,6 +73,7 @@ const UpdateProfile = () => {
 			name: updatedUser?.name,
 			bio: updatedUser?.bio,
 			imageUrl: updatedUser?.imageUrl,
+			walletPubKey: updatedUser?.walletPubKey,
 		});
 		return navigate(`/profile/${id}`);
 	};
@@ -162,6 +165,21 @@ const UpdateProfile = () => {
 										/>
 									</FormControl>
 									<FormMessage className="shad-form_message" />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="walletPubKey"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel className="shad-form_label">
+										Wallet Public Key
+									</FormLabel>
+									<FormControl>
+										<Input type="text" className="shad-input" {...field} />
+									</FormControl>
+									<FormMessage />
 								</FormItem>
 							)}
 						/>

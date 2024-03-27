@@ -151,7 +151,7 @@ const PostForm = ({ post, action }: PostFormProps) => {
 							<FormLabel className="shad-form_label">Add your price</FormLabel>
 							<FormControl>
 								<Input
-									type="number"
+									type="text"
 									className="shad-input"
 									placeholder="$ 20.95"
 									{...field}
