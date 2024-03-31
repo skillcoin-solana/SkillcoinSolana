@@ -1,13 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
-import { Button, Input, useToast } from '../ui';
+import { Button, useToast } from '../ui';
 import * as web3 from '@solana/web3.js';
 import { MdWallet } from 'react-icons/md';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useUserContext } from '@/context/AuthContext';
-import { useGetPostById } from '@/lib/react-query/queries';
+import {
+	useBuyOffer,
+	useDeleteSavedPost,
+	useGetCurrentUser,
+	useGetPostById,
+	useSavePost,
+} from '@/lib/react-query/queries';
 import { Loader } from '.';
-import { getPostById } from '@/lib/appwrite/api';
+import { getCurrentUser } from '@/lib/appwrite/api';
 
 const SendSol = () => {
 	const navigate = useNavigate();
@@ -15,6 +20,8 @@ const SendSol = () => {
 	const { id } = useParams();
 
 	const { data: post, isLoading } = useGetPostById(id);
+
+	const { mutate: buyOffer } = useBuyOffer();
 
 	const [account, setAccount] = useState<any>('');
 	const [amount, setAmount] = useState<number>(0);
@@ -25,6 +32,8 @@ const SendSol = () => {
 
 	const { connection } = useConnection();
 	const { publicKey, sendTransaction } = useWallet();
+
+	const { data: currentUser } = useGetCurrentUser();
 
 	const handleTransaction = async () => {
 		if (!connection || !publicKey) {
@@ -47,6 +56,14 @@ const SendSol = () => {
 
 			const newBalance = balance - amount;
 			setBalance(newBalance);
+
+			buyOffer({
+				buyerId: currentUser?.$id,
+				offerId: post?.$id,
+				sellerId: post?.creator.$id,
+			});
+
+			toast({ title: 'Transaction successful' });
 		} catch (error) {
 			toast({ title: 'Transaction failed. Please try again' });
 			console.log(error);
@@ -66,15 +83,17 @@ const SendSol = () => {
 		getInfo();
 	}, [connection, publicKey]);
 
-	const calulateSol = (usPrice: number) => {
+	const calculateSol = (usPrice: number) => {
 		return usPrice * 0.0053;
 	};
 
 	useEffect(() => {
-		getPostById(id).then((res: any) => {
-			setAccount(res.creator.walletPubKey);
-			setAmount(calulateSol(parseFloat(res.location)));
-		});
+		// getPostById(id).then((res: any) => {
+		// 	setAccount(res.creator.walletPubKey);
+		// 	setAmount(calulateSol(parseFloat(res.price)));
+		// });
+		setAccount(post?.creator.walletPubKey);
+		setAmount(calculateSol(parseFloat(post?.price)));
 	}, [id]);
 
 	const outputs = [

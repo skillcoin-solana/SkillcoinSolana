@@ -144,7 +144,7 @@ export async function createPost(post: INewPost) {
 				caption: post.caption,
 				imageUrl: fileUrl,
 				imageId: uploadedFile.$id,
-				location: post.location,
+				price: post.price,
 				tags: tags,
 			}
 		);
@@ -249,6 +249,21 @@ export async function getInfinitePosts({ pageParam }: { pageParam: number }) {
 	}
 }
 
+export async function getSavedOffers() {
+	try {
+		const posts = await databases.listDocuments(
+			appwriteConfig.databaseId,
+			appwriteConfig.boughtCollectionId
+		);
+
+		if (!posts) throw Error;
+
+		return posts;
+	} catch (error) {
+		console.log(error);
+	}
+}
+
 // ============================== GET POST BY ID
 export async function getPostById(postId?: string) {
 	if (!postId) throw Error;
@@ -305,7 +320,7 @@ export async function updatePost(post: IUpdatePost) {
 				caption: post.caption,
 				imageUrl: image.imageUrl,
 				imageId: image.imageId,
-				location: post.location,
+				price: post.price,
 				tags: tags,
 			}
 		);
@@ -378,7 +393,7 @@ export async function savePost(userId: string, postId: string) {
 	try {
 		const updatedPost = await databases.createDocument(
 			appwriteConfig.databaseId,
-			appwriteConfig.savesCollectionId,
+			appwriteConfig.boughtCollectionId,
 			ID.unique(),
 			{
 				user: userId,
@@ -393,12 +408,39 @@ export async function savePost(userId: string, postId: string) {
 		console.log(error);
 	}
 }
+
+/// ============================== BUY OFFER
+export async function buyOffer(
+	buyerId: string,
+	offerId: string,
+	sellerId: string
+) {
+	try {
+		const updatedPost = await databases.createDocument(
+			appwriteConfig.databaseId,
+			appwriteConfig.boughtCollectionId,
+			ID.unique(),
+			{
+				user: buyerId,
+				post: offerId,
+				seller: sellerId,
+			}
+		);
+
+		if (!updatedPost) throw Error;
+
+		return updatedPost;
+	} catch (error) {
+		console.log(error);
+	}
+}
+
 // ============================== DELETE SAVED POST
 export async function deleteSavedPost(savedRecordId: string) {
 	try {
 		const statusCode = await databases.deleteDocument(
 			appwriteConfig.databaseId,
-			appwriteConfig.savesCollectionId,
+			appwriteConfig.boughtCollectionId,
 			savedRecordId
 		);
 

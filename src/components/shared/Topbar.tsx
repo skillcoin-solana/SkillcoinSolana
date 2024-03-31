@@ -92,7 +92,7 @@ const Topbar = () => {
 						height={325}
 					/>
 				</Link>
-				<WalletMultiButton className="!h-12 !bg-gray-2 !hover:bg-denim-blue !px-5 !text-light-1 !flex !gap-2" />
+
 				{/* <div>
 					<div className="sm:flex hidden h-10 gap-1 px-4 xl:w-[800px] w-420 rounded-xl bg-gray-2 items-center">
 						<Input
@@ -109,6 +109,7 @@ const Topbar = () => {
 					</div>
 				</div> */}
 				<div className="flex gap-4 items-center">
+					<WalletMultiButton />
 					<div className="lg:flex hidden gap-8 items-center">
 						<Link to="/explore">
 							<AiOutlineMessage size={24} className="cursor-pointer" />

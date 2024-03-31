@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import * as web3 from '@solana/web3.js';
-import { GridPostList, Loader } from '@/components/shared';
+import { Loader } from '@/components/shared';
 import { useGetCurrentUser } from '@/lib/react-query/queries';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 
@@ -34,10 +34,14 @@ const WalletStats = () => {
 				<li className="flex justify-between">
 					<p className="tracking-wider base-semibold">Public Key</p>
 					<p className="lg:flex hidden text-neon-blue base-semibold">
-						{currentUser.walletPubKey! || 'Not Available'}
+						{currentUser.walletPubKey === null
+							? 'Not Available'
+							: currentUser.walletPubKey!}
 					</p>
 					<p className="lg:hidden flex text-neon-blue base-semibold">
-						{`${currentUser.walletPubKey!.slice(0, 20)}...` || 'Not Available'}
+						{currentUser.walletPubKey !== null
+							? `${currentUser.walletPubKey!.slice(0, 20)}...`
+							: 'Not Available'}
 					</p>
 				</li>
 				<li className="flex mt-4 justify-between">

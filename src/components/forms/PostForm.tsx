@@ -35,7 +35,7 @@ const PostForm = ({ post, action }: PostFormProps) => {
 		defaultValues: {
 			caption: post ? post?.caption : '',
 			file: [],
-			location: post ? post.location : '',
+			price: post ? post.price : '',
 			tags: post ? post.tags.join(',') : '',
 		},
 	});
@@ -145,7 +145,7 @@ const PostForm = ({ post, action }: PostFormProps) => {
 
 				<FormField
 					control={form.control}
-					name="location"
+					name="price"
 					render={({ field }) => (
 						<FormItem>
 							<FormLabel className="shad-form_label">Add your price</FormLabel>
